@@ -880,7 +880,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   changeTime: 600
-  sceneName: 
+  test: 
 --- !u!4 &1672516046
 Transform:
   m_ObjectHideFlags: 0
