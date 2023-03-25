@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     public float movespeed = 1f;
     public float collisionOffset = 0.05f;
 
-    public ContactFilter movementFilter;
+    public ContactFilter2D movementFilter;
 
     Vector2 movementInput;
 
@@ -26,12 +26,17 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate(){
         // If movement input is not 0, try to move
-        if(movementInput != Vector2.zero)
+        if(movementInput != Vector2.zero){
             int count = rb.Cast(
                 movementInput, // X and Y values between -1 and 1 that represent the direction from the body to look for collisions
                 movementFilter, // The settings that can determine where a collision can occur on such as layers to collide with
                 castCollisions, // List of collisions to store the found collisions into after the Cast is finished
                 movespeed * Time.fixedDeltaTime + collisionOffset); // The amount to cast equal to the movement plus an offset
+
+            if (count == 0){
+                rb.MovePosition(rb.position + movementInput * movespeed * Time.fixedDeltaTime);
+            }
+        }
     }
 
     void OnMove(InputValue movementValue) {
