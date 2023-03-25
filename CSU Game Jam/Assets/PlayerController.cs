@@ -16,26 +16,32 @@ public class PlayerController : MonoBehaviour
 
     Rigidbody2D rb;
 
+    Animator animator;
+
+    SpriteRenderer spriteRenderer;
+
     List<RaycastHit2D> castCollisions = new List<RaycastHit2D>();
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     private void FixedUpdate()
     {
         // If movement input is not 0, try to move
-        if(movementInput != Vector2.zero)
+        if (movementInput != Vector2.zero)
         {
             bool success = TryMove(movementInput);
 
-            if(!success)
+            if (!success)
             {
                 success = TryMove(new Vector2(movementInput.x, 0));
 
-                if(!success)
+                if (!success)
                 {
                     success = TryMove(new Vector2(0, movementInput.y));
                 }
@@ -65,5 +71,11 @@ public class PlayerController : MonoBehaviour
     void OnMove(InputValue movementValue) 
     {
         movementInput = movementValue.Get<Vector2>();
+
+        if (movementInput != Vector2.zero)
+        {
+            animator.SetFloat("xMove", movementInput.x);
+            animator.SetFloat("yMove", movementInput.y);
+        }
     }
 }
